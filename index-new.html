@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>云之家js桥demo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<style>
+		html,body,div,ul,li,h3,p,a{
+			margin:0; 
+			padding:0;
+		}
+		body{
+			line-height: 1.6;
+		}
+		ul{
+			list-style: none;
+		}
+		a{
+			text-decoration: none;
+		}
+		.yzjapi-list{
+			width: 100%;
+			background-color: #fff;
+		}
+		.api-item{
+			padding-left: 15px;
+		}
+		.api-item a{
+			display: block;
+			color: #3e3e3e;
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		}
+		.api-item-inner{
+			padding-top: 10px;
+			padding-bottom: 10px;
+			min-height: 24px;
+			position: relative;
+		}
+		.api-item-inner:before{
+			content: " ";
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 200%;
+			height: 1px;
+			border-top: 1px solid #ededed;
+			-webkit-transform-origin: 0 0;
+			transform-origin: 0 0;
+			-webkit-transform: scale(0.5);
+			transform: scale(0.5);
+			top: auto;
+			bottom: -2px;
+		}
+		h3{
+			padding-top: 16px;
+			margin-top: 25px;
+			font-size: 16px;
+			font-weight: 400;
+			color: #3e3e3e;
+			position: relative;
+		}
+		h3:first-child{
+		    padding-top: 15px;
+		}
+		.desc {
+		    font-size: 14px;
+		    font-weight: 400;
+		    line-height: 2em;
+		    color: #8d8c92;
+		}
+		.btn{
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			padding-left: 14px;
+			padding-right: 14px;
+			font-size: 18px;
+			text-align: center;
+			text-decoration: none;
+			overflow: visible;
+			height: 42px;
+			border-radius: 5px;
+			-moz-border-radius: 5px;
+			-webkit-border-radius: 5px;
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			-webkit-box-sizing: border-box;
+			color: #ffffff;
+			line-height: 42px;
+			-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+			background-color: #3cbaff;
+		}
+		button.btn {
+		    width: 100%;
+		    border: 0;
+		    outline: 0;
+		    -webkit-appearance: none;
+		}
+		.yzjapi-test{
+			background-color: #ffffff;
+		    padding: 0 15px;
+		    margin-top: 30px;
+		    padding-bottom: 15px;
+		}
+	</style>
+</head>
+<body>
+	<ul class="yzjapi-list">
+		<li class="api-item"><a class="api-item-inner" href="#menu-base">基础接口</a></li>
+		<!-- <li class="api-item"><a class="api-item-inner" href="#menu-option">隐藏或者显示右上角的按钮</a></li> -->
+		<li class="api-item"><a class="api-item-inner" href="#title">隐藏或者设置页面标题</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#getPersonInfo-title">获取当前用户身份信息（桌面端+）</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#network">获取用户网络状态</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#third">打开第三方应用</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#menu-chat">进入会话</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#personInfo-title">唤起人员详情页面</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#menu-share">分享接口</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#switchCompany-title">切换工作圈</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#menu-view-control">关闭轻应用界面</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#scanQRCode-title">扫一扫</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#createPop-title">自定义右上角弹出菜单</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#closePop-title">关闭右上角弹出菜单</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#closeWebView-title">关闭当前webview</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#getLocation-title">云之家定位</a></li>
+		<li class="api-item"><a class="api-item-inner" href="#selectLocation-title">云之家选取周边位置</a></li>
+	</ul>
+	<div class="yzjapi-test">
+		<h3 id="menu-base">基础接口</h3>
+		<p class="desc">判断当前手机系统的类型</p>
+		<button class="btn" id="getOS">getOS</button>
+		<p class="desc">判断当前手机环境是否支持JSBridge</p>
+		<button class="btn" id="supportBridge">support</button>
+		<p class="desc">当前支持的js桥的版本</p>
+		<button class="btn" id="getVersion">getVersion</button>
+		<p class="desc">判断是否运行于云之家桌面端</p>
+		<button class="btn" id="getCloudhub">getCloudhub</button>
+
+		<!-- <h3 id="menu-option">隐藏或者显示右上角的按钮</h3>
+		<p class="desc">隐藏右上角按钮</p>
+		<button class="btn" id="hideOptionMenu">hideOptionMenu</button>
+		<p class="desc">显示右上角按钮</p>
+		<button class="btn" id="showOptionMenu">showOptionMenu</button> -->
+
+
+		<h3 id="getPersonInfo-title">获取当前用户身份信息（桌面端+）</h3>
+		<p class="desc">获取当前用户身份信息（桌面端+）</p>
+		<button class="btn" id="getPersonInfo">getPersonInfo</button>
+
+		<h3 id="network">获取用户网络状态</h3>
+		<p class="desc">获取用户网络状态</p>
+		<button class="btn" id="getNetworkType">getNetworkType</button>
+
+		<h3 id="third">打开第三方应用</h3>
+		<p class="desc">打开第三方应用</p>
+		<button class="btn" id="gotoApp">gotoApp</button>
+
+		<h3 id="menu-chat">进入会话</h3>
+		<p class="desc">进入会话</p>
+		<button class="btn" id="chat">chat</button>
+
+		<h3 id="personInfo-title">唤起人员详情页面</h3>
+		<p class="desc">唤起人员详情页面</p>
+		<button class="btn" id="personInfo">personInfo</button>
+
+		<h3 id="menu-share">分享接口</h3>
+		<p class="desc">公共号或轻应用分享消息（桌面端+）
+		</p><button class="btn" id="share-pub">share</button>
+
+		<h3 id="switchCompany-title">切换工作圈</h3>
+		<p class="desc">切换工作圈</p>
+		<button class="btn" id="switchCompany">switchCompany</button>
+
+		<h3 id="menu-view-control">关闭轻应用界面</h3>
+		<p class="desc">关闭轻应用界面</p>
+		<button class="btn" id="close">close</button>
+
+		<h3 id="selectPic-title">获取图片</h3>
+		<p class="desc">获取图片</p>
+		<button class="btn" id="selectPic">selectPic</button>
+
+		<h3 id="scanQRCode-title">扫一扫</h3>
+		<p class="desc">扫一扫</p>
+		<button class="btn" id="scanQRCode">scanQRCode</button>
+
+		<h3 id="createPop-title">自定义右上角弹出菜单</h3>
+		<p class="desc">自定义右上角弹出菜单</p>
+		<button class="btn" id="createPop">createPop</button>
+		
+		<h3 id="closePop-title">关闭右上角弹出菜单</h3>
+		<p class="desc">关闭右上角弹出菜单</p>
+		<button class="btn" id="closePop">closePop</button>
+
+		<h3 id="closeWebView-title">关闭当前webview</h3>
+		<p class="desc">关闭当前webview</p>
+		<button class="btn" id="closeWebView">closeWebView</button>
+
+		<h3 id="getLocation-title">云之家定位</h3>
+		<p class="desc">云之家定位</p>
+		<button class="btn" id="getLocation">getLocation</button>
+
+		<h3 id="selectLocation-title">云之家选取周边位置</h3>
+		<p class="desc">云之家选取周边位置</p>
+		<button class="btn" id="selectLocation">selectLocation</button>
+		
+		<h3 id="selectLocation-title">选择人员</h3>
+        <p class="desc">选择人员</p>
+        <button class="btn" id="selectPersons">selectPersons</button>
+	</div>
+
+	<script src="http://do.yunzhijia.com/pub/js/qingjs.js"></script>
+	<script src="demo-new.js"></script>
+</body>
+</html>
